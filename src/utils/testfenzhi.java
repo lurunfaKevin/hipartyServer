@@ -7,4 +7,5 @@ package utils;
  * @version 1.0
  */
 public class testfenzhi {
+    private String test;
 }
