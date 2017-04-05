@@ -8,4 +8,5 @@ package utils;
  */
 public class testvcs {
     private String test;
+    private String hi;
 }
