@@ -123,7 +123,6 @@ public class UserController {
 	}
 
 	@RequestMapping("/download")
-
 	public void TestdownloadFile(String url,HttpServletResponse response){
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("multipart/form-data");
@@ -133,11 +132,10 @@ public class UserController {
 			System.out.println(file.getAbsolutePath());
 			InputStream inputStream= null;
 			try {
-				inputStream = new FileInputStream("file/"+file);
+				inputStream = new FileInputStream(file);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			System.out.println("11111111111"+file);
 			OutputStream os=response.getOutputStream();
 			byte[] b=new byte[1024];
 			int length;
