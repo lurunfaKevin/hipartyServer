@@ -1,4 +1,4 @@
-package utils;
+package com.utils;
 
 /**
  * Created by lurunfa on 2017/4/2.
@@ -6,7 +6,6 @@ package utils;
  * @author lurunfa
  * @version 1.0
  */
-public class testvcs {
+public class testfenzhi {
     private String test;
-    private String hi;
 }

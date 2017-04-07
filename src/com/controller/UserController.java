@@ -1,22 +1,22 @@
-package controller;
+package com.controller;
 
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.beans.*;
+import com.google.gson.Gson;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import beans.Chater;
-import beans.Room;
-import beans.RoomUser;
-import beans.User;
-import utils.HibernateUtil;
+import com.utils.HibernateUtil;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value="/user")
@@ -81,6 +81,27 @@ public class UserController {
 		chater.setMessage("SUCCEED");
 		return chater;
 	}
+	//暖场游戏
+	@RequestMapping(value="/warmgame")
+	@ResponseBody
+	public Chater WarmGame(String level){
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session=sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		List<WarmGame> WarmGamelist = session.createQuery("from WarmGame where WarmGameLevel=:WarmGameLevel")
+				.setParameter("WarmGameLevel", level).list();
+		session.getTransaction().commit();
+		// 设定返回值
+		Chater chater = new Chater();
+		chater.setOrder("warmgame");
+		Map<String, Object> object = new HashMap<>();
+		object.put("size", WarmGamelist.size());
+		object.put("list", new Gson().toJson(WarmGamelist));
+		chater.setObject(object);
+		chater.setMessage("SUCCEED");
+		return chater;
+	}
+	//惩罚
 
 	@RequestMapping("/test")
 	@ResponseBody
@@ -99,5 +120,35 @@ public class UserController {
 		chater.setObject(map);
 		
 		return chater;
+	}
+
+	@RequestMapping("/download")
+
+	public void TestdownloadFile(String url,HttpServletResponse response){
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("multipart/form-data");
+		response.setHeader("Content-Disposition", "attachment;fileName="+url);
+		try {
+			File file=new File(url);
+			System.out.println(file.getAbsolutePath());
+			InputStream inputStream= null;
+			try {
+				inputStream = new FileInputStream("file/"+file);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			System.out.println("11111111111"+file);
+			OutputStream os=response.getOutputStream();
+			byte[] b=new byte[1024];
+			int length;
+			while((length=inputStream.read(b))>0){
+				os.write(b,0,length);
+			}
+			inputStream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package handler;
+package com.handler;
 
 import java.net.URLDecoder;
 import java.text.DateFormat;
@@ -18,14 +18,14 @@ import org.hibernate.SessionFactory;
 
 import com.google.gson.Gson;
 
-import beans.Chater;
-import beans.Lab;
-import beans.Punishment;
-import beans.Room;
-import beans.RoomUser;
-import beans.WarmGame;
-import utils.HibernateUtil;
-import utils.LabUtils;
+import com.beans.Chater;
+import com.beans.Lab;
+import com.beans.Punishment;
+import com.beans.Room;
+import com.beans.RoomUser;
+import com.beans.WarmGame;
+import com.utils.HibernateUtil;
+import com.utils.LabUtils;
 
 public class UserHandler implements IoHandler {
 	private Lab lab= Lab.getLab();
@@ -61,8 +61,8 @@ public class UserHandler implements IoHandler {
 				break;
 			case "talk":handleTalk(iossession,chater);
 				break;
-			case "warmgame":handleWarmGame(iossession,chater);
-				break;
+//			case "warmgame":handleWarmGame(iossession,chater);
+//				break;
 			case "ensure_warmgame":handleEnsureWarmGame(iossession,chater);
 				break;
 			default:
@@ -116,32 +116,32 @@ public class UserHandler implements IoHandler {
 
 	}
 
-	private void handleWarmGame(IoSession iossession, Chater chater) {
-		String roomId = chater.getRoomId();
-		Map<String, Object> obj = new HashMap<>();
-		obj = (Map<String, Object>) chater.getObject();
-		String level = (String) obj.get("warmgameLevel");
-
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.getCurrentSession();
-		session.beginTransaction();
-		List<WarmGame> WarmGamelist = session.createQuery("from WarmGame where WarmGameLevel=:WarmGameLevel")
-				.setParameter("WarmGameLevel", level).list();
-		session.getTransaction().commit();
-		// 设定返回值
-		Chater chater2 = new Chater();
-		chater2.setOrder("warmgame");
-		chater2.setRoomId(roomId);
-		Map<String, Object> object = new HashMap<>();
-		object.put("size", WarmGamelist.size());
-		object.put("list", new Gson().toJson(WarmGamelist));
-		chater2.setUserId(chater.getUserId());
-		chater2.setObject(object);
-		chater2.setMessage(CheckHost(chater.getRoomId(), chater.getUserId()));
-
-		SendAll(chater2,chater.getRoomId());
-
-	}
+//	private void handleWarmGame(IoSession iossession, Chater chater) {
+//		String roomId = chater.getRoomId();
+//		Map<String, Object> obj = new HashMap<>();
+//		obj = (Map<String, Object>) chater.getObject();
+//		String level = (String) obj.get("warmgameLevel");
+//
+//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//		Session session=sessionFactory.getCurrentSession();
+//		session.beginTransaction();
+//		List<WarmGame> WarmGamelist = session.createQuery("from WarmGame where WarmGameLevel=:WarmGameLevel")
+//				.setParameter("WarmGameLevel", level).list();
+//		session.getTransaction().commit();
+//		// 设定返回值
+//		Chater chater2 = new Chater();
+//		chater2.setOrder("warmgame");
+//		chater2.setRoomId(roomId);
+//		Map<String, Object> object = new HashMap<>();
+//		object.put("size", WarmGamelist.size());
+//		object.put("list", new Gson().toJson(WarmGamelist));
+//		chater2.setUserId(chater.getUserId());
+//		chater2.setObject(object);
+//		chater2.setMessage(CheckHost(chater.getRoomId(), chater.getUserId()));
+//
+//		SendAll(chater2,chater.getRoomId());
+//
+//	}
 
 	private void handleTalk(IoSession iossession, Chater chater) {
 

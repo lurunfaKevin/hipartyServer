@@ -1,8 +1,8 @@
-package utils;
+package com.utils;
 
-import beans.Lab;
-import beans.Room;
-import beans.RoomUser;
+import com.beans.Lab;
+import com.beans.Room;
+import com.beans.RoomUser;
 
 public class LabUtils {
 	

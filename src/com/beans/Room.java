@@ -1,10 +1,10 @@
-package beans;
+package com.beans;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import utils.RoomUtils;
+import com.utils.RoomUtils;
 
 public class Room {
 

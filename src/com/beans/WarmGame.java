@@ -1,4 +1,4 @@
-package beans;
+package com.beans;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,35 +8,36 @@ import javax.persistence.Table;
 @Entity
 @Table(name="WarmGame")
 public class WarmGame {
-	private String WarmGameName;
-	private String WarmGameLevel;
-	private String WarmGameId;
-	private String WarmGame;
+	private String warmGameName;
+	private String warmGameLevel;
+	private String warmGameId;
+	private String warmGame;
+	private String warmGameUrl;
 	private int id;
 	
 	public String getWarmGameName() {
-		return WarmGameName;
+		return warmGameName;
 	}
 	public void setWarmGameName(String warmGameName) {
-		WarmGameName = warmGameName;
+		warmGameName = warmGameName;
 	}
 	public String getWarmGameLevel() {
-		return WarmGameLevel;
+		return warmGameLevel;
 	}
 	public void setWarmGameLevel(String warmGameLevel) {
-		WarmGameLevel = warmGameLevel;
+		warmGameLevel = warmGameLevel;
 	}
 	public String getWarmGameId() {
-		return WarmGameId;
+		return warmGameId;
 	}
 	public void setWarmGameId(String warmGameId) {
-		WarmGameId = warmGameId;
+		warmGameId = warmGameId;
 	}
 	public String getWarmGame() {
-		return WarmGame;
+		return warmGame;
 	}
 	public void setWarmGame(String warmGame) {
-		WarmGame = warmGame;
+		warmGame = warmGame;
 	}
 	@Id
 	@GeneratedValue

@@ -5,7 +5,7 @@
  <session-factory>
  
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-  <property name="hibernate.connection.password">111111</property>
+  <property name="hibernate.connection.password">19960329su</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hiparty</property>
   <property name="hibernate.connection.username">root</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -21,8 +21,8 @@
   <property name="hibernate.c3p0.timeout">50000</property>
   <property name="hibernate.c3p0.acquire_increment">2</property>
 
-  <mapping class="beans.User"/>
-  <mapping class="beans.Punishment"/>
-  <mapping class="beans.WarmGame"/>
+  <mapping class="com.beans.User"/>
+  <mapping class="com.beans.Punishment"/>
+  <mapping class="com.beans.WarmGame"/>
  </session-factory>
 </hibernate-configuration>

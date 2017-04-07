@@ -1,4 +1,4 @@
-package listener;
+package com.listener;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -14,11 +14,8 @@ import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import beans.Lab;
-import beans.Room;
-import beans.RoomUser;
-import handler.UserHandler;
-import utils.HibernateUtil;
+import com.handler.UserHandler;
+import com.utils.HibernateUtil;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
