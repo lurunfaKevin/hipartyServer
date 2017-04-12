@@ -11,26 +11,27 @@ import com.google.gson.Gson;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.utils.HibernateUtil;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value="/user")
+@Transactional
 public class UserController {
-	
-	private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-	
+	@Resource
+	private SessionFactory sessionFactory;
 	//用户登录
 	@RequestMapping(value="/login") 
 	@ResponseBody
  	public Chater UserLogin(String userId,String password){
 
 		Session session = sessionFactory.getCurrentSession();
-		session.beginTransaction();
 		User user = (User) session.createQuery("from User where userId=:userId")
 		.setParameter("userId", userId)
 		.uniqueResult();
@@ -48,8 +49,7 @@ public class UserController {
 		}
 		chater.setMessage("SUCCEED");
 		
-		session.getTransaction().commit();
-		
+
 		return chater;
 	}	
 	//用户注册
@@ -85,18 +85,16 @@ public class UserController {
 	@RequestMapping(value="/warmgame")
 	@ResponseBody
 	public Chater WarmGame(String level){
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        List<WarmGame> warmGamelist= null;
 		Session session=sessionFactory.getCurrentSession();
-		session.beginTransaction();
-		List<WarmGame> WarmGamelist = session.createQuery("from WarmGame where WarmGameLevel=:WarmGameLevel")
-				.setParameter("WarmGameLevel", level).list();
-		session.getTransaction().commit();
+		warmGamelist = session.createQuery("from WarmGame where warmGameLevel=:level").setParameter("level",level)
+				.list();
 		// 设定返回值
 		Chater chater = new Chater();
 		chater.setOrder("warmgame");
 		Map<String, Object> object = new HashMap<>();
-		object.put("size", WarmGamelist.size());
-		object.put("list", new Gson().toJson(WarmGamelist));
+		object.put("size", warmGamelist.size());
+		object.put("list", new Gson().toJson(warmGamelist));
 		chater.setObject(object);
 		chater.setMessage("SUCCEED");
 		return chater;
